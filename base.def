@@ -14,6 +14,8 @@ From: debian:11
         gcc \
         git \
         g++ \
+	mpich \
+	libmpich-dev \
         libclang-11-dev \
         libedit-dev \
         libibverbs-dev \
@@ -32,6 +34,7 @@ From: debian:11
         python3-pip \
         python3-venv \
         python3-dev \
+	sudo \
         wget
     rm -rf /var/lib/apt/lists/*
 
@@ -43,5 +46,7 @@ From: debian:11
     echo 'export PS1="[${CONTAINER_NAME}-${CONTAINER_VERSION}] \A \W$ "' >> /.singularity.d/env/999-env.sh
 
 %environment
+    export LC_ALL=C.UTF-8
+    export TERM=xterm-256color
     export CONTAINER_NAME=base
     export CONTAINER_VERSION=0.0

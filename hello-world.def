@@ -4,6 +4,7 @@ From: chapel-1.25.0.sif
 %post -c /bin/bash
     set -eu
 
+    export CC=gcc CXX=g++ CF=gfortran
     export MANPATH=
     cd /chapel/chapel-1.25.0
     . util/setchplenv.bash
@@ -14,7 +15,9 @@ From: chapel-1.25.0.sif
     cp /chapel/chapel-1.25.0/examples/$APPNAME.chpl .
     mkdir -p bin/none
     mkdir -p bin/ibv
+    mkdir -p bin/mpi
 
+    set -x
     export CHPL_LAUNCHER=none \
            CHPL_COMM=none \
            CHPL_LLVM=system
@@ -29,7 +32,15 @@ From: chapel-1.25.0.sif
     chpl ../../$APPNAME.chpl
     cd ../..
 
+    export CHPL_COMM=gasnet \
+           CHPL_COMM_SUBSTRATE=mpi \
+           CHPL_GASNET_SEGMENT=
+    cd bin/mpi
+    chpl ../../$APPNAME.chpl
+    cd ../..
+
 %environment
     export LC_ALL=C.UTF-8
+    export TERM=xterm-256color
     export CONTAINER_NAME=chapel
     export CONTAINER_VERSION=1.25.0

@@ -14,6 +14,9 @@ From: base.sif
     tar xfz chapel-1.25.0.tar.gz
     cd chapel-1.25.0
 
+    # export MPICH_CC=clang-11 MPICH_CXX=clang++-11
+    export CC=gcc CXX=g++ CF=gfortran
+
     export MANPATH= \
            CHPL_LAUNCHER=none \
            CHPL_COMM=none \
@@ -27,6 +30,11 @@ From: base.sif
     export CHPL_COMM=gasnet \
            CHPL_COMM_SUBSTRATE=ibv \
            CHPL_GASNET_SEGMENT=fast
+    make -j $(nproc --all)
+
+    export CHPL_COMM=gasnet \
+           CHPL_COMM_SUBSTRATE=mpi \
+           CHPL_GASNET_SEGMENT=
     make -j $(nproc --all)
 
 %environment
