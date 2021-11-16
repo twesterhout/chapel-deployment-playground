@@ -1,0 +1,35 @@
+Bootstrap: localimage
+From: chapel-1.25.0.sif
+
+%post -c /bin/bash
+    set -eu
+
+    export MANPATH=
+    cd /chapel/chapel-1.25.0
+    . util/setchplenv.bash
+           
+    mkdir -p /project
+    cd /project
+    export APPNAME=hello6-taskpar-dist
+    cp /chapel/chapel-1.25.0/examples/$APPNAME.chpl .
+    mkdir -p bin/none
+    mkdir -p bin/ibv
+
+    export CHPL_LAUNCHER=none \
+           CHPL_COMM=none \
+           CHPL_LLVM=system
+    cd bin/none
+    chpl ../../$APPNAME.chpl
+    cd ../..
+
+    export CHPL_COMM=gasnet \
+           CHPL_COMM_SUBSTRATE=ibv \
+           CHPL_GASNET_SEGMENT=fast
+    cd bin/ibv
+    chpl ../../$APPNAME.chpl
+    cd ../..
+
+%environment
+    export LC_ALL=C.UTF-8
+    export CONTAINER_NAME=chapel
+    export CONTAINER_VERSION=1.25.0
