@@ -15,12 +15,17 @@ From: base.sif
     cd chapel-1.25.0
 
     # export MPICH_CC=clang-11 MPICH_CXX=clang++-11
-    export CC=gcc CXX=g++ CF=gfortran
+    export CC=gcc CXX=g++ CF=gfortran \
+           PMI_HOME=/usr/lib/x86_64-linux-gnu/pmix2
+    # PMI_HOME setting...           (default)  "/usr"
+    # checking for PMI_LDFLAGS setting...        (default)  ""
+    # checking for PMI_LIBS setting...           (default)  "probe"
 
     export MANPATH= \
            CHPL_LAUNCHER=none \
            CHPL_COMM=none \
            CHPL_LLVM=system \
+           CHPL_HWLOC=bundled \
            CHPL_UNWIND=none \
            CHPL_GMP=none \
            CHPL_RE2=none
