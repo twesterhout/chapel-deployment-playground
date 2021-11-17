@@ -1,0 +1,52 @@
+Bootstrap: localimage
+From: hello-world.sif
+Stage: devel
+
+Bootstrap: docker
+From: busybox:1.34.1-glibc
+
+%files from devel
+    /etc/libibverbs.d                                      /etc
+    /usr/share/openmpi                                     /usr/share/
+    /usr/lib/x86_64-linux-gnu/openmpi                      /usr/lib/x86_64-linux-gnu/
+    /usr/lib/x86_64-linux-gnu/pmix2                        /usr/lib/x86_64-linux-gnu/
+    /usr/lib/x86_64-linux-gnu/libibverbs                   /usr/lib/x86_64-linux-gnu/
+    /usr/lib/x86_64-linux-gnu/libompitrace.so.*            /usr/lib/x86_64-linux-gnu/
+    /usr/lib/x86_64-linux-gnu/libopen-pal.so.*             /usr/lib/x86_64-linux-gnu/
+    /usr/lib/x86_64-linux-gnu/libopen-rte.so.*             /usr/lib/x86_64-linux-gnu/
+    /usr/lib/x86_64-linux-gnu/liboshmem.so.*               /usr/lib/x86_64-linux-gnu/
+    /usr/lib/x86_64-linux-gnu/libmca_*.so.*                /usr/lib/x86_64-linux-gnu/
+    /usr/lib/x86_64-linux-gnu/libmpi.so.*                  /usr/lib/x86_64-linux-gnu/
+    /usr/lib/x86_64-linux-gnu/libmpi_*.so.*                /usr/lib/x86_64-linux-gnu/
+    /usr/lib/x86_64-linux-gnu/libevent_core-2.1.so.*       /usr/lib/x86_64-linux-gnu/
+    /usr/lib/x86_64-linux-gnu/libevent_pthreads-2.1.so.*   /usr/lib/x86_64-linux-gnu/
+    /usr/lib/x86_64-linux-gnu/libpmix.so.*                 /usr/lib/x86_64-linux-gnu/
+    /usr/lib/x86_64-linux-gnu/libibverbs.so.*              /usr/lib/x86_64-linux-gnu/
+    /usr/lib/x86_64-linux-gnu/libucp.so.*                  /usr/lib/x86_64-linux-gnu/
+    /usr/lib/x86_64-linux-gnu/libucs.so.*                  /usr/lib/x86_64-linux-gnu/
+    /usr/lib/x86_64-linux-gnu/libfabric.so.*               /usr/lib/x86_64-linux-gnu/
+    /usr/lib/x86_64-linux-gnu/librdmacm.so.*               /usr/lib/x86_64-linux-gnu/
+    /usr/lib/x86_64-linux-gnu/libinfinipath.so.*           /usr/lib/x86_64-linux-gnu/
+    /usr/lib/x86_64-linux-gnu/libpsm_infinipath.so.*       /usr/lib/x86_64-linux-gnu/
+    /usr/lib/x86_64-linux-gnu/libpsm2.so.*                 /usr/lib/x86_64-linux-gnu/
+    /usr/lib/x86_64-linux-gnu/libefa.so.*                  /usr/lib/x86_64-linux-gnu/
+    /usr/lib/x86_64-linux-gnu/libuct.so.*                  /usr/lib/x86_64-linux-gnu/
+    /usr/lib/x86_64-linux-gnu/libuuid.so.*                 /usr/lib/x86_64-linux-gnu/
+    /usr/lib/x86_64-linux-gnu/libucm.so.*                  /usr/lib/x86_64-linux-gnu/
+    /usr/lib/x86_64-linux-gnu/libnl-route-3.so.*           /usr/lib/x86_64-linux-gnu/
+    /usr/lib/x86_64-linux-gnu/libmlx4.so.*                 /usr/lib/x86_64-linux-gnu/
+    /usr/lib/x86_64-linux-gnu/libmlx5.so.*                 /usr/lib/x86_64-linux-gnu/
+    /usr/lib/x86_64-linux-gnu/libhwloc.so.*                /usr/lib/x86_64-linux-gnu/
+    /usr/lib/x86_64-linux-gnu/libnuma.so.*                 /usr/lib/x86_64-linux-gnu/
+    /usr/lib/x86_64-linux-gnu/libudev.so*                  /usr/lib/x86_64-linux-gnu/
+    /lib/x86_64-linux-gnu/libgcc_s.so.*                    /lib/x86_64-linux-gnu/
+    /lib/x86_64-linux-gnu/libz.so.*                        /lib/x86_64-linux-gnu/
+    /lib/x86_64-linux-gnu/libdl.so.*                       /lib/x86_64-linux-gnu/
+    /lib/x86_64-linux-gnu/librt.so.*                       /lib/x86_64-linux-gnu/
+    /lib/x86_64-linux-gnu/libnl-3.so.*                     /lib/x86_64-linux-gnu/
+    /lib/x86_64-linux-gnu/libutil.so.*                     /lib/x86_64-linux-gnu/
+    /project                                               /
+
+%environment
+    export LC_ALL=C.UTF-8
+    export TERM=xterm-256color
