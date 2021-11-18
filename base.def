@@ -3,7 +3,9 @@ From: debian:11
 
 %post -c /bin/bash
     set -eu
-    apt-get update && apt-get install -y --no-install-recommends --no-install-suggests \
+    apt-get clean
+    apt-get update
+    apt-get install -y --no-install-recommends --no-install-suggests \
         bash \
         ca-certificates \
         clang-11 \
@@ -17,11 +19,11 @@ From: debian:11
         libclang-11-dev \
         libedit-dev \
         libibverbs-dev \
-	libreadline8 \
-	libopenmpi3 \
-	libopenmpi-dev \
-	libpmix2 \
-	libpmix-dev \
+        libreadline8 \
+        libucx0 \
+        libucx-dev \
+        libpmix2 \
+        libpmix-dev \
         llvm-11-dev \
         llvm-11 \
         llvm-11-tools \
@@ -36,9 +38,38 @@ From: debian:11
         python3-pip \
         python3-venv \
         python3-dev \
-	sudo \
+        sudo \
         wget
     rm -rf /var/lib/apt/lists/*
+
+
+    export OMPI_VERSION=4.1.1
+    export OMPI_URL="https://download.open-mpi.org/release/open-mpi/v4.1/openmpi-${OMPI_VERSION}.tar.gz"
+    mkdir -p /ompi
+    # Download
+    cd /ompi
+    wget -O openmpi-$OMPI_VERSION.tar.gz $OMPI_URL
+    tar -xf openmpi-$OMPI_VERSION.tar.gz
+    # Compile and install
+    cd /ompi/openmpi-$OMPI_VERSION
+    ./configure \
+        --with-package-string='Debian OpenMPI' \
+        --build=x86_64-linux-gnu \
+        --prefix=/usr \
+        --disable-dependency-tracking \
+        --disable-silent-rules \
+        --disable-wrapper-runpath \
+        --disable-mpi-java \
+        --with-ucx \
+        --without-verbs \
+        --without-ofi \
+        --without-psm \
+        --without-psm2 \
+        --without-portals4 \
+        --without-tm \
+        --with-pmix=/usr/lib/x86_64-linux-gnu/pmix2 \
+        --with-hwloc=internal
+    make -j $(nproc --all) install
 
     sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
     echo 'LANG="en_US.UTF-8"'>/etc/default/locale
